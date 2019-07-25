@@ -1,0 +1,9 @@
+
+http://127.0.0.1:16666/mod_cluster-manager
+
+http://127.0.0.1:2080/aaa/?stateful
+http://127.0.0.1:2080/bbb/?stateful
+http://127.0.0.1:8080/aaa/?stateful
+http://127.0.0.1:8180/aaa/?stateful
+http://127.0.0.1:8080/bbb/?stateful
+http://127.0.0.1:8180/bbb/?stateful

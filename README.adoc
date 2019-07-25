@@ -1,0 +1,16 @@
+http://127.0.0.1:2080/session/simple/?stateful
+
+http://127.0.0.1:8080/session/simple/?stateful
+
+[source,bash,options="nowrap"]
+----
+curl -v http://127.0.0.1:2080/session/simple/?stateful
+curl -v http://127.0.0.1:8080/session/simple/?stateful
+
+cd /opt/rh/jbcs-httpd24-2.4/httpd/logs/
+tail -f access_log
+----
+
+== mod_cluster manager
+
+http://127.0.0.1:16666/mod_cluster-manager

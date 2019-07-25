@@ -1,0 +1,4 @@
+[root@jbcs2429-eap72 logs]# pwd
+/opt/rh/jbcs-httpd24-2.4/httpd/logs
+[root@jbcs2429-eap72 logs]# cat error_log | grep mod_jk
+[Mon Jul 08 01:38:29.169721 2019] [mpm_prefork:notice] [pid 12] AH00163: JBCS httpd/2.4.29-SP2-40 (Red Hat) OpenSSL/1.0.2n-15 mod_auth_kerb/5.4 mod_jk/1.2.46 configured -- resuming normal operations
