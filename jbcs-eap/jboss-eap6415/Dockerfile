@@ -1,15 +1,10 @@
-FROM registry.access.redhat.com/rhel7.6
+FROM registry.access.redhat.com/ubi7/ubi
 
 LABEL MAINTAINER="Jong Seok Won <jwon@redhat.com>"
 LABEL version="0.1"
 LABEL description="JBoss EAP 6.4"
 
 USER root
-
-RUN subscription-manager register --username <USER_ID> --password <PASSWORD> --auto-attach
-RUN subscription-manager repos --enable=rhel-7-server-rpms
-RUN subscription-manager repos --enable=rhel-7-server-extras-rpms
-RUN subscription-manager repos --enable=rhel-7-server-optional-rpms
 
 # jboss-eap-6.4.0.zip
 # jboss-eap-6.4.9-patch.zip
@@ -24,7 +19,9 @@ ENV EAP_BASE /opt/eap
 ENV EAP_HOME ${EAP_BASE}/jboss-eap-6.4
 
 # Add OpenJDK, update image, and clear cache
-RUN yum -y install unzip java-1.8.0-openjdk-devel && yum -y update; yum clean all
+RUN yum update --disableplugin=subscription-manager -y && rm -rf /var/cache/yum
+RUN yum install --disableplugin=subscription-manager unzip java-1.8.0-openjdk-devel -y && rm -rf /var/cache/yum
+
 
 # Copy local artifacts to docker tmp-directory
 RUN mkdir ${TMP}; mkdir ${EAP_BASE}

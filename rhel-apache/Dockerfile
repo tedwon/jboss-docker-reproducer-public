@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/rhel7.6
+FROM registry.access.redhat.com/ubi7/ubi
 
 LABEL MAINTAINER="Jong Seok Won <jwon@redhat.com>"
 LABEL version="0.1"
@@ -6,13 +6,10 @@ LABEL description="Running RHEL7 docker image on mac"
 
 USER root
 
-RUN subscription-manager register --username <USER_ID> --password <PASSWORD> --auto-attach
-RUN subscription-manager repos --enable=rhel-7-server-rpms
-RUN subscription-manager repos --enable=rhel-7-server-extras-rpms
-RUN subscription-manager repos --enable=rhel-7-server-optional-rpms
-
 # Add Web server, update image, and clear cache
-RUN yum -y install httpd && yum -y update; yum clean all
+RUN yum update --disableplugin=subscription-manager -y && rm -rf /var/cache/yum
+RUN yum install --disableplugin=subscription-manager httpd -y && rm -rf /var/cache/yum
+
 # Add some data to web server
 RUN echo "This Web server is working." > /var/www/html/index.html
 EXPOSE 80

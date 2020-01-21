@@ -1,15 +1,10 @@
-FROM registry.access.redhat.com/rhel7.6
+FROM registry.access.redhat.com/ubi7/ubi
 
 LABEL MAINTAINER="Jong Seok Won <jwon@redhat.com>"
 LABEL version="0.1"
 LABEL description="JBCS Apache HTTPD & mod_cluster & JBoss EAP Standalone Cluster"
 
 USER root
-
-# RUN subscription-manager register --username rhn-support-jwon --password <password> --auto-attach
-# RUN subscription-manager repos --enable=rhel-7-server-rpms
-# RUN subscription-manager repos --enable=rhel-7-server-extras-rpms
-# RUN subscription-manager repos --enable=rhel-7-server-optional-rpms
 
 # jbcs-httpd24-httpd-2.4.29-RHEL7-x86_64.zip
 # httpd.conf
@@ -28,7 +23,8 @@ ENV EAP_BASE /opt/eap
 ENV EAP_HOME ${EAP_BASE}/jboss-eap-7.2
 
 # Add OpenJDK, update image, and clear cache
-RUN yum -y install unzip elinks krb5-workstation mailcap java-1.8.0-openjdk-devel && yum -y update; yum clean all
+RUN yum update --disableplugin=subscription-manager -y && rm -rf /var/cache/yum
+RUN yum install --disableplugin=subscription-manager unzip elinks krb5-workstation mailcap java-1.8.0-openjdk-devel -y && rm -rf /var/cache/yum
 
 # Copy local artifacts to docker tmp-directory
 RUN mkdir ${TMP}; mkdir ${JBCS_BASE}; mkdir ${EAP_BASE}
